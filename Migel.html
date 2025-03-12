@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemilihan Presiden 2025</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background: url('ACC.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0.95;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background: #1c05c7;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #d60808;
+        }
+        .toggle {
+            margin-top: 10px;
+            color: rgb(23, 117, 17);
+            cursor: pointer;
+        }
+        .logo {
+            width: 150px;
+            height: 150px;
+        }
+        .hidden {
+            display: none;
+        }
+        .candidate-container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .candidate {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 120px;
+            padding: 10px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .logout-btn:hover {
+            background: white;
+            color: red;
+            border: 2px solid red;
+        }
+        .candidate img {
+            width: 150px;
+            height: 150px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .vote-btn {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background: #1c05c7;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .vote-btn:hover {
+            background: #d60808;
+        }
+        .back-btn {
+            width: 150px;
+            padding: 10px;
+            margin: 20px auto;
+            border: 2px solid black;
+            border-radius: 5px;
+            background: orange;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: block; 
+            text-align: center;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: orange;
+            border: 2px solid black;
+        }
+
+        .data-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 180px;
+            padding: 10px;
+            background: green;
+            color: white;
+            border: 1pt solid black;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .data-btn:hover {
+            background: white;
+            color: green;
+            border: 1pt solid black;
+        }
+
+        #home-page h1,
+        #vote-page h1,
+        #result-page h1,
+        #data-page h1{
+            color: white;
+            border: 2px solid black;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <!-- Halaman Login -->
+    <div id="login-page">
+        <img src="—Pngtree—indonesia election logo simultaneously vector_14481434.png" class="logo" alt="Logo Pemilu">
+        <h2>
+            Selamat Datang di Sistem Pemilihan Presiden 2025
+        </h2>
+        <p>
+            Silakan login atau daftar untuk melakukan voting calon presiden.
+        </p>        
+
+        <div class="container" id="login-container">
+            <h2>Login</h2>
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button onclick="login()">Login</button>
+            <p class="toggle" onclick="showRegister()">Belum punya akun? Register</p>
+        </div>
+
+        <div class="container hidden" id="register-container">
+            <h2>Register</h2>
+            <input type="text" placeholder="Nama Lengkap" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Password" required>
+            <input type="text" placeholder="Tempat Lahir" required>
+            <input type="date" required>
+            <label>Upload Foto KTP:</label>
+            <input type="file" accept="image/*" required>
+            <button>Register</button>
+            <p class="toggle" onclick="showLogin()">Sudah punya akun? Login</p>
+        </div>
+    </div>
+
+    <!-- Halaman Beranda -->
+    <div id="home-page" class="hidden">
+        <button class="data-btn" onclick="goToDataPage()">Melengkapi Data Diri</button>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <h1>Daftar Calon Presiden 2025</h1>
+        <div class="candidate-container">
+            <div class="candidate">
+                <img src="1.jpg" alt="Calon 1">
+                <h3>Nomor Urut: 1</h3>
+                <p><strong>Partai:</strong> Partai Sejahtera</p>
+                <p><strong>Calon Presiden:</strong> Aimar</p>
+                <p><strong>Biodata:</strong> Aimar adalah seorang ekonom berpengalaman dan aktivis sosial.</p>
+                <p><strong>Visi & Misi:</strong> Meningkatkan kesejahteraan rakyat melalui inovasi dan pemerataan ekonomi.</p>
+            </div>
+
+            <div class="candidate">
+                <img src="2.jpg" alt="Calon 2">
+                <h3>Nomor Urut: 2</h3>
+                <p><strong>Partai:</strong> Partai Mobile Legend</p>
+                <p><strong>Calon Presiden:</strong> Tariq</p>
+                <p><strong>Biodata:</strong> Tariq adalah mantan gubernur dengan pengalaman luas dalam pembangunan daerah.</p>
+                <p><strong>Visi & Misi:</strong> Membangun ekonomi yang berkelanjutan dan memberdayakan UMKM.</p>
+            </div>
+
+            <div class="candidate">
+                <img src="3.jpg" alt="Calon 3">
+                <h3>Nomor Urut: 3</h3>
+                <p><strong>Partai:</strong> Partai Demokrasi</p>
+                <p><strong>Calon Presiden:</strong> Yasser</p>
+                <p><strong>Biodata:</strong> Yasser adalah seorang pengusaha sukses dan reformis politik.</p>
+                <p><strong>Visi & Misi:</strong> Mendorong inovasi digital dan pembangunan infrastruktur.</p>
+            </div>
+
+            <div class="candidate">
+                <img src="4.jpg" alt="Calon 4">
+                <h3>Nomor Urut: 4</h3>
+                <p><strong>Partai:</strong> Partai Keadilan</p>
+                <p><strong>Calon Presiden:</strong> Ihtifanul</p>
+                <p><strong>Biodata:</strong> Ihtifanul adalah mantan diplomat dengan pengalaman internasional.</p>
+                <p><strong>Visi & Misi:</strong> Memperkuat hubungan internasional dan meningkatkan sektor pendidikan.</p>
+            </div>
+            <button id="vote-btn" class="vote-btn" onclick="goToVote()">Vote Sekarang</button>
+            <button id="result-btn" class="vote-btn" onclick="goToResult()">Lihat Hasil Voting</button>
+        </div>
+    </div>
+
+    <!-- Halaman Vote-->
+    <div id="vote-page" class="hidden">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <h1>Voting Calon Presiden 2025</h1>
+        <div class="candidate-container">
+            <div class="candidate">
+                <img src="1.jpg" alt="Calon 1">
+                <h3>Nomor Urut: 1</h3>
+                <p>Aimar</p>
+                <button onclick="vote(1)">Pilih</button>
+            </div>
+            <div class="candidate">
+                <img src="2.jpg" alt="Calon 2">
+                <h3>Nomor Urut: 2</h3>
+                <p>Tariq</p>
+                <button onclick="vote(2)">Pilih</button>
+            </div>
+            <div class="candidate">
+                <img src="3.jpg" alt="Calon 3">
+                <h3>Nomor Urut: 3</h3>
+                <p>Yasser</p>
+                <button onclick="vote(3)">Pilih</button>
+            </div>
+            <div class="candidate">
+                <img src="4.jpg" alt="Calon 4">
+                <h3>Nomor Urut: 4</h3>
+                <p>Ihtifanul</p>
+                <button onclick="vote(4)">Pilih</button>
+            </div>
+        </div>
+        <button class="back-btn" onclick="goBackHome()">Kembali</button>
+    </div>
+
+    <!-- Halaman Hasil Voting -->
+    <div id="result-page" class="hidden">
+        <button class="logout-btn" onclick="logout()">Logout</button>
+        <h1>Hasil Voting Pemilihan Presiden 2025</h1>
+        <div class="candidate-container">
+            <div class="candidate">
+                <h3>Nomor Urut: 1</h3>
+                <p>Aimar</p>
+                <p><strong>Jumlah Suara:</strong> <span id="vote-count-1">0</span></p>
+            </div>
+            <div class="candidate">
+                <h3>Nomor Urut: 2</h3>
+                <p>Tariq</p>
+                <p><strong>Jumlah Suara:</strong> <span id="vote-count-2">0</span></p>
+            </div>
+            <div class="candidate">
+                <h3>Nomor Urut: 3</h3>
+                <p>Yasser</p>
+                <p><strong>Jumlah Suara:</strong> <span id="vote-count-3">0</span></p>
+            </div>
+            <div class="candidate">
+                <h3>Nomor Urut: 4</h3>
+                <p>Ihtifanul</p>
+                <p><strong>Jumlah Suara:</strong> <span id="vote-count-4">0</span></p>
+            </div>
+        </div>
+        <button class="back-btn" onclick="goBackHome()">Kembali</button>
+    </div>
+
+    <!-- Halaman Melengkapi data diri -->
+    <div id="data-page" class="hidden">
+        <button class="back-btn" onclick="goBackHome()">Kembali</button>
+        <h1>Melengkapi Data Diri</h1>
+        <div class="container">
+            <input type="text" placeholder="Nama Lengkap" required>
+            <input type="text" placeholder="Nama Panggilan" required>
+            <input type="text" placeholder="Tempat Lahir" required>
+            <input type="date" required>
+            <select required>
+                <option value="">Jenis Kelamin</option>
+                <option value="Laki-laki">Laki-laki</option>
+                <option value="Perempuan">Perempuan</option>
+            </select>
+            <input type="text" placeholder="Alamat" required>
+            <input type="text" placeholder="Pendidikan Terakhir" required>
+            <label>Upload Foto KTP:</label>
+            <input type="file" accept="image/*" required>
+            <label>Upload Foto KK:</label>
+            <input type="file" accept="image/*" required>
+            <button onclick="saveData()">Simpan</button>
+        </div>
+    </div>    
+
+    <script>
+        function showRegister() {
+            document.getElementById("login-container").classList.add("hidden");
+            document.getElementById("register-container").classList.remove("hidden");
+        }
+
+        function showLogin() {
+            document.getElementById("register-container").classList.add("hidden");
+            document.getElementById("login-container").classList.remove("hidden");
+        }
+
+        function login() {
+            let email = document.getElementById("login-email").value;
+            let password = document.getElementById("login-password").value;
+
+            if (email && password) {
+                alert("Login berhasil!");
+                document.getElementById("login-page").classList.add("hidden");
+                document.getElementById("home-page").classList.remove("hidden");
+                document.getElementById("vote-btn").classList.remove("hidden");
+            } else {
+                alert("Harap isi email dan password.");
+            }
+        }
+
+        function logout() {
+            document.getElementById("home-page").classList.add("hidden");
+            document.getElementById("vote-page").classList.add("hidden");
+            document.getElementById("result-page").classList.add("hidden");
+            document.getElementById("data-page").classList.add("hidden");
+
+            document.getElementById("login-page").classList.remove("hidden");
+        }
+
+        function goToVote() {
+            document.getElementById("home-page").classList.add("hidden");
+            document.getElementById("vote-page").classList.remove("hidden");
+
+            document.getElementById("result-page").classList.add("hidden");
+            document.getElementById("data-page").classList.add("hidden");
+        }
+         
+        function vote(candidateNumber) {
+        alert("Anda telah memilih calon nomor " + candidateNumber);
+            document.getElementById("vote-page").classList.add("hidden");
+            document.getElementById("home-page").classList.remove("hidden");
+        }
+
+        function goToResult() {
+            document.getElementById("login-page").classList.add("hidden");
+            document.getElementById("home-page").classList.add("hidden");
+            document.getElementById("vote-page").classList.add("hidden");
+            document.getElementById("data-page").classList.add("hidden");
+
+            document.getElementById("result-page").classList.remove("hidden");
+        }
+
+        function goBackHome() {
+            document.getElementById("login-page").classList.add("hidden");
+            document.getElementById("vote-page").classList.add("hidden");
+            document.getElementById("result-page").classList.add("hidden");
+            document.getElementById("data-page").classList.add("hidden");
+
+            document.getElementById("home-page").classList.remove("hidden");
+        }
+
+        function goToDataPage() {
+            document.getElementById("login-page").classList.add("hidden");
+            document.getElementById("home-page").classList.add("hidden");
+            document.getElementById("vote-page").classList.add("hidden");
+            document.getElementById("result-page").classList.add("hidden");
+
+            document.getElementById("data-page").classList.remove("hidden");
+        }
+
+        function saveData() {
+            alert("Data berhasil disimpan!");
+            goBackHome();
+        }
+    </script>
+</body>
+</html>
